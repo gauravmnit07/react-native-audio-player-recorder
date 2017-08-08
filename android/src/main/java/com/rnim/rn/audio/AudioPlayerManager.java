@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.net.Uri;
 import android.os.Environment;
 import android.media.MediaPlayer;
 import android.media.AudioManager;
@@ -71,13 +72,13 @@ class AudioPlayerManager extends ReactContextBaseJavaModule {
   public Map<String, Object> getConstants() {
     Map<String, Object> constants = new HashMap<>();
 
-    constants.put(DocumentDirectoryPath, this.getReactApplicationContext().getFilesDir().getAbsolutePath());
-    constants.put(PicturesDirectoryPath, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath());
+    constants.put(DocumentDirectoryPath, Uri.fromFile(new File(this.getReactApplicationContext().getFilesDir().getAbsolutePath())).toString());
+    constants.put(PicturesDirectoryPath, Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath())).toString());
     constants.put(MainBundlePath, "");
-    constants.put(CachesDirectoryPath, this.getReactApplicationContext().getCacheDir().getAbsolutePath());
+    constants.put(CachesDirectoryPath, Uri.fromFile(new File(this.getReactApplicationContext().getCacheDir().getAbsolutePath())).toString());
     constants.put(LibraryDirectoryPath, "");
-    constants.put(MusicDirectoryPath, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getAbsolutePath());
-    constants.put(DownloadsDirectoryPath, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
+    constants.put(MusicDirectoryPath, Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getAbsolutePath())).toString());
+    constants.put(DownloadsDirectoryPath, Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath())).toString());
     return constants;
   }
 

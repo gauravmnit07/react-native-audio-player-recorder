@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Environment;
 import android.media.MediaRecorder;
 import android.media.MediaPlayer;
@@ -51,13 +52,13 @@ class AudioRecorderManager extends ReactContextBaseJavaModule {
   @Override
   public Map<String, Object> getConstants() {
     Map<String, Object> constants = new HashMap<>();
-    constants.put(DocumentDirectoryPath, this.getReactApplicationContext().getFilesDir().getAbsolutePath());
-    constants.put(PicturesDirectoryPath, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath());
+    constants.put(DocumentDirectoryPath, Uri.fromFile(new File(this.getReactApplicationContext().getFilesDir().getAbsolutePath())).toString());
+    constants.put(PicturesDirectoryPath, Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbsolutePath())).toString());
     constants.put(MainBundlePath, "");
-    constants.put(CachesDirectoryPath, this.getReactApplicationContext().getCacheDir().getAbsolutePath());
+    constants.put(CachesDirectoryPath, Uri.fromFile(new File(this.getReactApplicationContext().getCacheDir().getAbsolutePath())).toString());
     constants.put(LibraryDirectoryPath, "");
-    constants.put(MusicDirectoryPath, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getAbsolutePath());
-    constants.put(DownloadsDirectoryPath, Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath());
+    constants.put(MusicDirectoryPath, Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC).getAbsolutePath())).toString());
+    constants.put(DownloadsDirectoryPath,Uri.fromFile(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath())).toString());
     return constants;
   }
 
@@ -81,6 +82,7 @@ class AudioRecorderManager extends ReactContextBaseJavaModule {
       promise.reject("INVALID_STATE", "Please call stopRecording before starting recording");
     }
 
+    recordingPath = Uri.parse(recordingPath).getPath();
     recorder = new MediaRecorder();
     try {
       recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
