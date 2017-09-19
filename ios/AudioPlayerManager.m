@@ -105,7 +105,7 @@ RCT_EXPORT_METHOD(play:(NSString *)path options:(NSDictionary *)options)
   
   if (error) {
     [self stopProgressTimer];
-    NSLog(@"audio playback loading error: %@", [error localizedDescription]);
+    RCTLog(@"audio playback loading error: %@", [error localizedDescription]);
     // TODO: dispatch error over the bridge
   } else {
     [self startProgressTimer];
@@ -127,7 +127,7 @@ RCT_EXPORT_METHOD(playWithUrl:(NSURL *) url options:(NSDictionary *)options)
   
   if (error) {
     [self stopProgressTimer];
-    NSLog(@"audio playback loading error: %@", [error localizedDescription]);
+    RCTLog(@"audio playback loading error: %@", [error localizedDescription]);
     // TODO: dispatch error over the bridge
   } else {
     [self startProgressTimer];
@@ -209,7 +209,7 @@ RCT_EXPORT_METHOD(skipToSeconds:(float)position)
     // Prevent skipping past end of file
     if ( position>=(int)_audioPlayer.duration )
     {
-      NSLog( @"Audio: IGNORING skip to <%.02f> (past EOF) of <%.02f> seconds", position, _audioPlayer.duration );
+      RCTLog( @"Audio: IGNORING skip to <%.02f> (past EOF) of <%.02f> seconds", position, _audioPlayer.duration );
       return;
     }
     
@@ -217,7 +217,7 @@ RCT_EXPORT_METHOD(skipToSeconds:(float)position)
     BOOL skipWhilePlaying = _audioPlayer.playing;
     
     // Perform skip
-    NSLog( @"Audio: skip to <%.02f> of <%.02f> seconds", position, _audioPlayer.duration );
+    RCTLog( @"Audio: skip to <%.02f> of <%.02f> seconds", position, _audioPlayer.duration );
     
     // NOTE: This stop,set,prepare,(play) sequence produces reliable results on the simulator and device.
     [_audioPlayer stop];

@@ -177,7 +177,7 @@ RCT_EXPORT_METHOD(prepareRecordingAtPath:(NSString *)path sampleRate:(float)samp
   _audioRecorder.delegate = self;
   
   if (error) {
-    NSLog(@"error: %@", [error localizedDescription]);
+    RCTLog(@"error: %@", [error localizedDescription]);
     // TODO: dispatch error over the bridge
   } else {
     [_audioRecorder prepareToRecord];
@@ -212,7 +212,7 @@ RCT_EXPORT_METHOD(pauseRecording)
 RCT_EXPORT_METHOD(playRecording)
 {
   if (_audioRecorder.recording) {
-    NSLog(@"stop the recording before playing");
+    RCTLog(@"stop the recording before playing");
     return;
     
   } else {
@@ -226,7 +226,7 @@ RCT_EXPORT_METHOD(playRecording)
       
       if (error) {
         [self stopProgressTimer];
-        NSLog(@"audio playback loading error: %@", [error localizedDescription]);
+        RCTLog(@"audio playback loading error: %@", [error localizedDescription]);
         // TODO: dispatch error over the bridge
       } else {
         [self startProgressTimer];
